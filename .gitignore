@@ -1,0 +1,20 @@
+*.vscode
+*.csproj
+*.sln
+*.log
+*.fake
+*.ionide
+
+**/Library/
+**/Logs/
+**/obj/
+**/Temp/
+**/UserSettings/
+
+# Additional Assets
+
+
+# results
+
+.fake
+.ionide
