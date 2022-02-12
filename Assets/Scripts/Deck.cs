@@ -89,6 +89,24 @@ public class Deck : MonoBehaviour
             m_discarded_cards.Clear();
         }
 
-        return m_cards[0];
+        Card card = m_cards[0];
+        m_cards.RemoveAt(0);
+        return card;
+    }
+
+    // デバッグ用
+    public void ShowDeck() {
+        foreach (Card card in m_cards)
+        {
+            card.ShowCard(card);
+        }
+    }
+
+    public void ShowDiscardedDeck()
+    {
+        foreach (Card card in m_discarded_cards)
+        {
+            card.ShowCard(card);
+        }
     }
 }

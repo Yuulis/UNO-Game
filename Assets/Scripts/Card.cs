@@ -13,9 +13,15 @@ public class Card : MonoBehaviour
         m_value = value;
     }
 
-    bool EvaluateCard(string open_color, string open_value)
+    public bool EvaluateCard(string open_color, string open_value)
     {
         if (m_color == open_color || m_value == open_value || m_value == "WILD" || m_value == "WDF") return true;
         else return false;
+    }
+
+    // デバッグ用
+    public void ShowCard(Card card)
+    {
+        Debug.Log("Color : " + card.m_color + ", Value : " + card.m_value);
     }
 }
