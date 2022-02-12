@@ -9,13 +9,13 @@ public class Card : MonoBehaviour
 
     public Card(string color, string value)
     {
-        this.m_color = color;
-        this.m_value = value;
+        m_color = color;
+        m_value = value;
     }
 
     bool EvaluateCard(string open_color, string open_value)
     {
-        if (this.m_color == open_color || this.m_value == open_value || this.m_value == "ch" || this.m_value == "wdr4") return true;
+        if (m_color == open_color || m_value == open_value || m_value == "WILD" || m_value == "WDF") return true;
         else return false;
     }
 }
