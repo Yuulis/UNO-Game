@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    string m_color;
-    string m_value;
+    public string m_color;
+    public string m_value;
 
     public Card(string color, string value)
     {
@@ -20,8 +20,8 @@ public class Card : MonoBehaviour
     }
 
     // デバッグ用
-    public void ShowCard(Card card)
+    public string ShowCard()
     {
-        Debug.Log("Color : " + card.m_color + ", Value : " + card.m_value);
+        return m_color + " - " + m_value;
     }
 }

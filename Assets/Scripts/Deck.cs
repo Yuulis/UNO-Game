@@ -98,7 +98,7 @@ public class Deck : MonoBehaviour
     public void ShowDeck() {
         foreach (Card card in m_cards)
         {
-            card.ShowCard(card);
+            card.ShowCard();
         }
     }
 
@@ -106,7 +106,7 @@ public class Deck : MonoBehaviour
     {
         foreach (Card card in m_discarded_cards)
         {
-            card.ShowCard(card);
+            card.ShowCard();
         }
     }
 }
