@@ -52,9 +52,9 @@ public class Player : MonoBehaviour
     /// 手札が0枚 -> true
     /// 手札が0枚より多い -> false
     /// </returns>
-    public bool CheckWin(Player player)
+    public bool CheckWin()
     {
-        if (player.m_hand.Count == 0) return true;
+        if (m_hand.Count == 0) return true;
         else return false;
     }
 

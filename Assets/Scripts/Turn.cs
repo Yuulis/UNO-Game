@@ -90,8 +90,8 @@ public class Turn : MonoBehaviour
             }
         }
 
-        if (now_player.CheckWin(now_player)) return;
-        if (other_player.CheckWin(other_player)) return;
+        if (now_player.CheckWin()) return;
+        if (other_player.CheckWin()) return;
 
         if (now_player.m_played_card.m_value == "DT") ActionPlus(now_player, other_player, 2);
         if (now_player.m_played_card.m_value == "WDF") ActionPlus(now_player, other_player, 4);
@@ -131,7 +131,7 @@ public class Turn : MonoBehaviour
                 }
             }
 
-            if (other_player.CheckWin(other_player)) return;
+            if (other_player.CheckWin()) return;
 
             if (hit)
             {
@@ -155,7 +155,7 @@ public class Turn : MonoBehaviour
                 }
             }
 
-            if (now_player.CheckWin(now_player)) return;
+            if (now_player.CheckWin()) return;
         }
 
         if (cnt % 2 == 0)
