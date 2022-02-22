@@ -84,7 +84,8 @@ public class Player : MonoBehaviour
         m_hand_playable = m_hand_playable.OrderBy(i => Guid.NewGuid()).ToList();
         foreach (Card card in m_hand)
         {
-            if (card == m_hand_playable[m_hand_playable.Count - 1]) {
+            if (card == m_hand_playable[m_hand_playable.Count - 1])
+            {
                 m_played_card = card;
                 m_hand.Remove(card);
                 m_hand_playable.RemoveAt(m_hand_playable.Count - 1);
@@ -98,7 +99,8 @@ public class Player : MonoBehaviour
         }
 
         // 色指定できるカードなら、色を選択させる
-        if (m_played_card.m_color == "sp" || m_played_card.m_value == "WDF") {
+        if (m_played_card.m_color == "sp" || m_played_card.m_value == "WDF")
+        {
             m_played_card.m_color = ChooseColor();
         }
     }
@@ -109,7 +111,8 @@ public class Player : MonoBehaviour
     /// <returns>
     /// 選択した色
     /// </returns>
-    public string ChooseColor() {
+    public string ChooseColor()
+    {
         string max_color = "";
         Dictionary<string, int> colors = new Dictionary<string, int>();
         foreach (Card card in m_hand)
@@ -117,12 +120,14 @@ public class Player : MonoBehaviour
             if (card.m_color != "sp") colors[card.m_color]++;
         }
 
-        if (colors.Count > 0) {
+        if (colors.Count > 0)
+        {
             var maxVal = colors.Values.Max();
             var maxElem = colors.FirstOrDefault(c => c.Value == maxVal);
             max_color = maxElem.Key;
         }
-        else {
+        else
+        {
             int r = Random.Range(0, 3 + 1);
             if (r == 0) max_color = "r";
             else if (r == 1) max_color = "y";
@@ -134,5 +139,24 @@ public class Player : MonoBehaviour
         Debug.Log(m_name + " chooses " + max_color);
 
         return max_color;
+    }
+
+    public void CounterPlay(Deck deck, Card open_card, Card counter_card)
+    {
+        foreach (Card card in m_hand)
+        {
+            if (card == counter_card)
+            {
+                m_played_card = card;
+                m_hand.Remove(card);
+                deck.Discard(card);
+                EvaluateHand(open_card);
+
+                // デバッグ用
+                Debug.Log(m_name + " counters with " + card.ShowCard());
+
+                break;
+            }
+        }
     }
 }

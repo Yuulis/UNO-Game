@@ -50,7 +50,7 @@ public class Turn : MonoBehaviour
     /// <summary>
     /// プレイヤーのプレイ
     /// </summary>
-    /// <param name="player">プレイ中のプレイヤー</param>
+    /// <param name="player">現ターンでプレイ中のプレイヤー</param>
     /// <param name="opponent">それ以外のプレイヤー</param>    
     public void Action(Player player, Player opponent)
     {
@@ -63,9 +63,124 @@ public class Turn : MonoBehaviour
         if (now_player.m_hand_playable.Count > 0)
         {
             now_player.RandomPlay(m_deck);
-
             m_open_card = now_player.m_played_card;
             now_player.EvaluateHand(m_open_card);
+        }
+
+        // ドローが必要なとき
+        else
+        {
+            // デバッグ用
+            Debug.Log(now_player.name + "has no playable card");
+
+            now_player.DrawCard(m_deck, m_open_card);
+
+            // プレイ可能なカードを引いたとき
+            if (now_player.m_hand_playable.Count > 0)
+            {
+                now_player.RandomPlay(m_deck);
+                m_open_card = now_player.m_played_card;
+                now_player.EvaluateHand(m_open_card);
+            }
+
+            // プレイ可能なカードを引けなかったとき
+            else
+            {
+                now_player.m_played_card = null;
+            }
+        }
+
+        if (now_player.CheckWin(now_player)) return;
+        if (other_player.CheckWin(other_player)) return;
+
+        if (now_player.m_played_card.m_value == "DT") ActionPlus(now_player, other_player, 2);
+        if (now_player.m_played_card.m_value == "WDF") ActionPlus(now_player, other_player, 4);
+    }
+
+    /// <summary>
+    /// ドロー2やワイルドドロー4がプレイされた場合
+    /// </summary>
+    /// <param name="player">現ターンでプレイ中のプレイヤー(カードを出したプレイヤー)</param>
+    /// <param name="opponent">それ以外のプレイヤー</param>
+    /// <param name="penalty">引くカードの枚数</param>
+    public void ActionPlus(Player player, Player opponent, int penalty)
+    {
+        Player now_player = player;
+        Player other_player = opponent;
+
+        bool hit = true;
+        int cnt = 0;
+        while (hit)
+        {
+            hit = false;
+            foreach (Card card in other_player.m_hand)
+            {
+                if (card.m_value == "DT" && penalty == 2)
+                {
+                    other_player.CounterPlay(m_deck, m_open_card, card);
+                    hit = true;
+                    cnt++;
+                    break;
+                }
+                else if (card.m_value == "WDF" && penalty == 4)
+                {
+                    other_player.CounterPlay(m_deck, m_open_card, card);
+                    hit = true;
+                    cnt++;
+                    break;
+                }
+            }
+
+            if (other_player.CheckWin(other_player)) return;
+
+            if (hit)
+            {
+                hit = false;
+                foreach (Card card in now_player.m_hand)
+                {
+                    if (card.m_value == "DT" && penalty == 2)
+                    {
+                        now_player.CounterPlay(m_deck, m_open_card, card);
+                        hit = true;
+                        cnt++;
+                        break;
+                    }
+                    else if (card.m_value == "WDF" && penalty == 4)
+                    {
+                        now_player.CounterPlay(m_deck, m_open_card, card);
+                        hit = true;
+                        cnt++;
+                        break;
+                    }
+                }
+            }
+
+            if (now_player.CheckWin(now_player)) return;
+        }
+
+        if (cnt % 2 == 0)
+        {
+            int penalty_cards = cnt * penalty;
+
+            // デバッグ用
+            Debug.Log(now_player.name + " has to draw " + penalty_cards.ToString() + " cards");
+
+            for (int i = 0; i < penalty_cards; i++)
+            {
+                now_player.DrawCard(m_deck, m_open_card);
+            }
+        }
+        else
+        {
+            int penalty_cards = cnt * penalty;
+
+            // デバッグ用
+            Debug.Log(other_player.name + " has to draw " + penalty_cards.ToString() + " cards");
+
+            for (int i = 0; i < penalty_cards; i++)
+            {
+                other_player.DrawCard(m_deck, m_open_card);
+            }
         }
     }
 }
