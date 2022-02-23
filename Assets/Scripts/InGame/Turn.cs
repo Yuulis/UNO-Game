@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turn : MonoBehaviour
+public class Turn
 {
     // 
     Deck m_deck;
@@ -71,7 +71,7 @@ public class Turn : MonoBehaviour
         else
         {
             // デバッグ用
-            Debug.Log(now_player.name + "has no playable card");
+            Debug.Log(now_player.m_name + "has no playable card");
 
             now_player.DrawCard(m_deck, m_open_card);
 
@@ -163,7 +163,7 @@ public class Turn : MonoBehaviour
             int penalty_cards = cnt * penalty;
 
             // デバッグ用
-            Debug.Log(now_player.name + " has to draw " + penalty_cards.ToString() + " cards");
+            Debug.Log(now_player.m_name + " has to draw " + penalty_cards.ToString() + " cards");
 
             for (int i = 0; i < penalty_cards; i++)
             {
@@ -175,7 +175,7 @@ public class Turn : MonoBehaviour
             int penalty_cards = cnt * penalty;
 
             // デバッグ用
-            Debug.Log(other_player.name + " has to draw " + penalty_cards.ToString() + " cards");
+            Debug.Log(other_player.m_name + " has to draw " + penalty_cards.ToString() + " cards");
 
             for (int i = 0; i < penalty_cards; i++)
             {

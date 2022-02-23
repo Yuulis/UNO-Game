@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Deck : MonoBehaviour
+public class Deck
 {
     // 山札
     List<Card> m_cards;
@@ -42,35 +42,35 @@ public class Deck : MonoBehaviour
         }
 
         Card[] cards_num = new Card[72];
-        for (int i = 1; i <= 2; i++)
+        for (int i = 0; i < 2; i++)
         {
-            for (int j = 1; j <= 4; j++)
+            for (int j = 0; j < 4; j++)
             {
-                for (int k = 1; k <= 9; k++)
+                for (int k = 0; k < 9; k++)
                 {
-                    cards_num[i * j * k] = new Card(colors[j - 1], k.ToString());
+                    cards_num[i * j * k] = new Card(colors[j], k.ToString());
                 }
             }
         }
 
         Card[] cards_action = new Card[24];
-        for (int i = 1; i <= 2; i++)
+        for (int i = 0; i < 2; i++)
         {
-            for (int j = 1; j <= 4; j++)
+            for (int j = 0; j < 4; j++)
             {
-                for (int k = 1; k <= 3; k++)
+                for (int k = 0; k < 3; k++)
                 {
-                    cards_action[i * j * k] = new Card(colors[j - 1], actions[k - 1]);
+                    cards_action[i * j * k] = new Card(colors[j], actions[k]);
                 }
             }
         }
 
         Card[] cards_special = new Card[8];
-        for (int i = 1; i <= 4; i++)
+        for (int i = 0; i < 4; i++)
         {
-            for (int j = 1; j <= 2; j++)
+            for (int j = 0; j < 2; j++)
             {
-                cards_special[i * j] = new Card("sp", specials[j - 1]);
+                cards_special[i * j] = new Card("sp", specials[j]);
             }
         }
 
@@ -122,7 +122,8 @@ public class Deck : MonoBehaviour
     /// <summary>
     /// 山札のカードを一括出力
     /// </summary>
-    public void ShowDeck() {
+    public void ShowDeck()
+    {
         foreach (Card card in m_cards)
         {
             card.ShowCard();

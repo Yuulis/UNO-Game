@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Game : MonoBehaviour
+public class Game
 {
     // プレイヤー1~2の名前
     string m_player_1_name;
@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     // 親プレイヤー名
     string m_firstPlayer_name;
 
-    Game(string player_1_name, string player_2_name, string firstPlayer_name)
+    public Game(string player_1_name, string player_2_name, string firstPlayer_name)
     {
         Player player_1 = new Player(m_player_1_name);
         Player player_2 = new Player(m_player_2_name);
@@ -67,7 +67,7 @@ public class Game : MonoBehaviour
 
             if (now_player.CheckWin())
             {
-                winner = now_player.name;
+                winner = now_player.m_name;
 
                 // デバッグ用
                 Debug.Log(winner + " has won!");
@@ -76,7 +76,7 @@ public class Game : MonoBehaviour
             }
             if (other_player.CheckWin())
             {
-                winner = other_player.name;
+                winner = other_player.m_name;
 
                 // デバッグ用
                 Debug.Log(winner + " has won!");
@@ -87,7 +87,7 @@ public class Game : MonoBehaviour
             if (now_player.m_played_card.m_value == "SKIP" || now_player.m_played_card.m_value == "REV")
             {
                 // デバッグ用
-                Debug.Log(now_player.name + " has another turn");
+                Debug.Log(now_player.m_name + " has another turn");
 
                 turn_cnt--;
             }
@@ -95,12 +95,10 @@ public class Game : MonoBehaviour
             if (turn_cnt > 0 && turn_cnt % 2 == 0)
             {
                 // デバッグ用
-                Debug.Log(now_player.name + "'s turn again");
+                Debug.Log(now_player.m_name + "'s turn again");
 
                 turn_cnt--;
             }
         }
-
-        
     }
 }

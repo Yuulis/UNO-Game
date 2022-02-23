@@ -5,10 +5,10 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Player : MonoBehaviour
+public class Player
 {
     // プレイヤー名
-    string m_name;
+    public string m_name;
 
     // プレイヤーの手札
     public List<Card> m_hand;
