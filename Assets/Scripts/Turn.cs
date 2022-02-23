@@ -12,7 +12,7 @@ public class Turn : MonoBehaviour
     Player m_player_2;
 
     // オープンカード(捨て札リストの一番上のカード)
-    Card m_open_card;
+    public Card m_open_card;
 
     public Turn(Deck deck, Player player_1, Player player_2)
     {

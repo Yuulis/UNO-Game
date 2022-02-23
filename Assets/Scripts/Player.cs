@@ -159,4 +159,32 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    // ===== デバッグ用 =====
+    /// <summary>
+    /// 手札のカードを出力
+    /// </summary>
+    public void ShowHand()
+    {
+        Debug.Log(m_name + " 's hand : ");
+        foreach (Card card in m_hand)
+        {
+            card.ShowCard();
+        }
+    }
+
+    /// <summary>
+    /// 手札の中で、現ターンでプレイ可能なカードを出力
+    /// </summary>
+    /// <param name="open_card">オープンカード</param>
+    public void ShowPlayableHand(Card open_card)
+    {
+        Debug.Log(m_name + " 's playable hand : ");
+
+        EvaluateHand(open_card);
+        foreach (Card card in m_hand_playable)
+        {
+            card.ShowCard();
+        }
+    }
 }
