@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Deck
 {
@@ -35,42 +36,42 @@ public class Deck
         // ワイルドカード(ワイルド, ワイルドドロー4)
         string[] specials = { "WILD", "WDF" };
 
-        Card[] cards_zero = new Card[4];
+        List<Card> cards_zero = new List<Card>();
         for (int i = 0; i < 4; i++)
         {
-            cards_zero[i] = new Card(colors[i], "0");
+            cards_zero.Add(new Card(colors[i], "0"));
         }
 
-        Card[] cards_num = new Card[72];
+        List<Card> cards_num = new List<Card>();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 4; j++)
             {
                 for (int k = 0; k < 9; k++)
                 {
-                    cards_num[i * j * k] = new Card(colors[j], k.ToString());
+                    cards_num.Add(new Card(colors[j], k.ToString()));
                 }
             }
         }
 
-        Card[] cards_action = new Card[24];
+        List<Card> cards_action = new List<Card>();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 4; j++)
             {
                 for (int k = 0; k < 3; k++)
                 {
-                    cards_action[i * j * k] = new Card(colors[j], actions[k]);
+                    cards_action.Add(new Card(colors[j], actions[k]));
                 }
             }
         }
 
-        Card[] cards_special = new Card[8];
+        List<Card> cards_special = new List<Card>();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 2; j++)
             {
-                cards_special[i * j] = new Card("sp", specials[j]);
+                cards_special.Add(new Card("sp", specials[j]));
             }
         }
 
@@ -126,7 +127,7 @@ public class Deck
     {
         foreach (Card card in m_cards)
         {
-            card.ShowCard();
+            card.ShowCard(card);
         }
     }
 
@@ -137,7 +138,7 @@ public class Deck
     {
         foreach (Card card in m_discarded_cards)
         {
-            card.ShowCard();
+            card.ShowCard(card);
         }
     }
 }

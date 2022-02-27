@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Turn
 {
-    // 
+    // 山札
     Deck m_deck;
 
     // プレイヤー(1~2)
@@ -29,22 +30,37 @@ public class Turn
     /// <summary>
     /// 最初のターンに実行
     /// 初期オープンカードの抽選
+    /// 各プレイヤーの初期手札抽選
     /// </summary>
     public void Initialize()
     {
         //TODO : 初期オープンカードの再抽選は行わず、そのカードの効果を最初のプレイヤーに対して発動させる
 
-        int open_card_valueNum = int.Parse(m_open_card.m_value);
-        while (!(0 <= open_card_valueNum && open_card_valueNum <= 9))
+        while (true)
         {
-            // デバッグ用
-            Debug.Log("The first open card has to be normal.");
-
-            m_open_card = m_deck.DrawCard();
+            try
+            {
+                int open_card_valueNum = Int32.Parse(m_open_card.m_value);
+                break;
+            }
+            catch (ArgumentNullException)
+            {
+                m_open_card = m_deck.DrawCard();
+            }
+            catch (FormatException)
+            {
+                m_open_card = m_deck.DrawCard();
+            }
         }
 
         // デバッグ用
-        Debug.Log("The first open card is " + m_open_card.ShowCard());
+        Debug.Log("The first open card is " + m_open_card.ShowCard(m_open_card));
+
+        for (int i = 0; i < 7; i++)
+        {
+            m_player_1.DrawCard(m_deck, m_open_card);
+            m_player_2.DrawCard(m_deck, m_open_card);
+        }
     }
 
     /// <summary>
@@ -70,10 +86,8 @@ public class Turn
         // ドローが必要なとき
         else
         {
-            // デバッグ用
-            Debug.Log(now_player.m_name + "has no playable card");
-
             now_player.DrawCard(m_deck, m_open_card);
+            now_player.EvaluateHand(m_open_card);
 
             // プレイ可能なカードを引いたとき
             if (now_player.m_hand_playable.Count > 0)
@@ -93,8 +107,11 @@ public class Turn
         if (now_player.CheckWin()) return;
         if (other_player.CheckWin()) return;
 
-        if (now_player.m_played_card.m_value == "DT") ActionPlus(now_player, other_player, 2);
-        if (now_player.m_played_card.m_value == "WDF") ActionPlus(now_player, other_player, 4);
+        if (now_player.m_played_card != null)
+        {
+            if (now_player.m_played_card.m_value == "DT") ActionPlus(now_player, other_player, 2);
+            if (now_player.m_played_card.m_value == "WDF") ActionPlus(now_player, other_player, 4);
+        }
     }
 
     /// <summary>

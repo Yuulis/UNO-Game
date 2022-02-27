@@ -7,17 +7,15 @@ public class GameManager : MonoBehaviour
     // ゲームオブジェクト
     Game game;
 
-    // プレイヤー名(1~2)
-    string Player1_name = "Bob";
-    string Player2_name = "Alex";
-
     //* 4プレイヤー対戦用
     // プレイヤー名のリスト
-    List<string> PlayerNameList = new List<string>();
+    List<string> playerNames = new List<string>();
 
     void Start()
     {
-        game = new Game(Player1_name, Player2_name, Player1_name);
+        playerNames.Add("Bob");
+        playerNames.Add("Alex");
+        game = new Game(playerNames[0], playerNames[1], playerNames[0]);
     }
 
     void Update()

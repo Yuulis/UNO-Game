@@ -11,10 +11,10 @@ public class Player
     public string m_name;
 
     // プレイヤーの手札
-    public List<Card> m_hand;
+    public List<Card> m_hand = new List<Card>();
 
     // プレイヤーの手札の中で、現在プレイ可能なカードのリスト
-    public List<Card> m_hand_playable;
+    public List<Card> m_hand_playable = new List<Card>();
 
     // 現ターンでプレイしたカード
     public Card m_played_card;
@@ -47,7 +47,6 @@ public class Player
     /// <summary>
     /// 勝利判定
     /// </summary>
-    /// <param name="player">判定するプレイヤー</param>
     /// <returns>
     /// 手札が0枚 -> true
     /// 手札が0枚より多い -> false
@@ -70,7 +69,7 @@ public class Player
         EvaluateHand(open_card);
 
         // デバッグ用
-        Debug.Log(m_name + " : draws " + card.ShowCard());
+        Debug.Log(m_name + " draws " + card.ShowCard(card));
     }
 
     /// <summary>
@@ -92,7 +91,7 @@ public class Player
                 deck.Discard(card);
 
                 // デバッグ用
-                Debug.Log(m_name + " plays " + card.ShowCard());
+                Debug.Log(m_name + " plays " + card.ShowCard(card));
 
                 break;
             }
@@ -113,32 +112,13 @@ public class Player
     /// </returns>
     public string ChooseColor()
     {
-        string max_color = "";
-        Dictionary<string, int> colors = new Dictionary<string, int>();
-        foreach (Card card in m_hand)
-        {
-            if (card.m_color != "sp") colors[card.m_color]++;
-        }
-
-        if (colors.Count > 0)
-        {
-            var maxVal = colors.Values.Max();
-            var maxElem = colors.FirstOrDefault(c => c.Value == maxVal);
-            max_color = maxElem.Key;
-        }
-        else
-        {
-            int r = Random.Range(0, 3 + 1);
-            if (r == 0) max_color = "r";
-            else if (r == 1) max_color = "y";
-            else if (r == 2) max_color = "g";
-            else if (r == 3) max_color = "b";
-        }
+        string[] colors = { "r", "y", "g", "b" };
+        int x = Random.Range(0, 3 + 1);
 
         // デバッグ用
-        Debug.Log(m_name + " chooses " + max_color);
+        Debug.Log(m_name + " chooses " + colors[x]);
 
-        return max_color;
+        return colors[x];
     }
 
     public void CounterPlay(Deck deck, Card open_card, Card counter_card)
@@ -153,7 +133,7 @@ public class Player
                 EvaluateHand(open_card);
 
                 // デバッグ用
-                Debug.Log(m_name + " counters with " + card.ShowCard());
+                Debug.Log(m_name + " counters with " + card.ShowCard(card));
 
                 break;
             }
@@ -166,11 +146,12 @@ public class Player
     /// </summary>
     public void ShowHand()
     {
-        Debug.Log(m_name + " 's hand : ");
+        string s = "";
         foreach (Card card in m_hand)
         {
-            card.ShowCard();
+            s += card.ShowCard(card) + ", ";
         }
+        Debug.Log(m_name + "'s hand : " + s);
     }
 
     /// <summary>
@@ -179,12 +160,19 @@ public class Player
     /// <param name="open_card">オープンカード</param>
     public void ShowPlayableHand(Card open_card)
     {
-        Debug.Log(m_name + " 's playable hand : ");
-
         EvaluateHand(open_card);
+
+        if (!(m_hand_playable.Count > 0))
+        {
+            Debug.Log(m_name + " has no playable card");
+            return;
+        } 
+
+        string s = "";
         foreach (Card card in m_hand_playable)
         {
-            card.ShowCard();
+            s += card.ShowCard(card) + ", ";
         }
+        Debug.Log(m_name + "'s playable hand : " + s);
     }
 }
