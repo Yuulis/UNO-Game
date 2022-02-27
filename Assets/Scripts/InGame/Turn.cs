@@ -126,7 +126,7 @@ public class Turn
         Player other_player = opponent;
 
         bool hit = true;
-        int cnt = 0;
+        int cnt = 1;
         while (hit)
         {
             hit = false;
@@ -139,7 +139,7 @@ public class Turn
                     cnt++;
                     break;
                 }
-                else if (card.m_value == "WDF" && penalty == 4)
+                else if (card.m_value == "WDF")
                 {
                     other_player.CounterPlay(m_deck, m_open_card, card);
                     hit = true;
@@ -162,7 +162,7 @@ public class Turn
                         cnt++;
                         break;
                     }
-                    else if (card.m_value == "WDF" && penalty == 4)
+                    else if (card.m_value == "WDF")
                     {
                         now_player.CounterPlay(m_deck, m_open_card, card);
                         hit = true;
@@ -170,9 +170,9 @@ public class Turn
                         break;
                     }
                 }
-            }
 
-            if (now_player.CheckWin()) return;
+                if (now_player.CheckWin()) return;
+            }
         }
 
         if (cnt % 2 == 0)

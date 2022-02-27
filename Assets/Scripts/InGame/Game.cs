@@ -93,14 +93,6 @@ public class Game
                     turn_cnt--;
                 }
             }
-
-            //if (turn_cnt > 0 && turn_cnt % 2 == 0)
-            //{
-            //    // デバッグ用
-            //    Debug.Log(now_player.m_name + "'s turn again");
-
-            //    turn_cnt--;
-            //}
         }
     }
 }
