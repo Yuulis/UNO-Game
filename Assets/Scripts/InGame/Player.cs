@@ -34,7 +34,6 @@ public class Player
     public void EvaluateHand(Card open_card)
     {
         m_hand_playable.Clear();
-
         foreach (Card card in m_hand)
         {
             if (card.EvaluateCard(open_card.m_color, open_card.m_value))
@@ -68,7 +67,7 @@ public class Player
         m_hand.Add(card);
         EvaluateHand(open_card);
 
-        // デバッグ用
+        // ログ出力
         Debug.Log(m_name + " draws " + card.ShowCard(card));
     }
 
@@ -79,7 +78,6 @@ public class Player
     public void RandomPlay(Deck deck)
     {
         Random.InitState(System.DateTime.Now.Millisecond);
-
         m_hand_playable = m_hand_playable.OrderBy(i => Guid.NewGuid()).ToList();
         foreach (Card card in m_hand)
         {
@@ -90,7 +88,7 @@ public class Player
                 m_hand_playable.RemoveAt(m_hand_playable.Count - 1);
                 deck.Discard(card);
 
-                // デバッグ用
+                // ログ出力
                 Debug.Log(m_name + " plays " + card.ShowCard(card));
 
                 break;
@@ -115,7 +113,7 @@ public class Player
         string[] colors = { "r", "y", "g", "b" };
         int x = Random.Range(0, 3 + 1);
 
-        // デバッグ用
+        // ログ出力
         Debug.Log(m_name + " chooses " + colors[x]);
 
         return colors[x];
@@ -132,7 +130,7 @@ public class Player
                 deck.Discard(card);
                 EvaluateHand(open_card);
 
-                // デバッグ用
+                // ログ出力
                 Debug.Log(m_name + " counters with " + card.ShowCard(card));
 
                 break;
@@ -140,7 +138,7 @@ public class Player
         }
     }
 
-    // ===== デバッグ用 =====
+    // ===== ログ出力 =====
     /// <summary>
     /// 手札のカードを出力
     /// </summary>

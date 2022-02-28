@@ -31,7 +31,7 @@ public class Card
         else return false;
     }
 
-    // ===== デバッグ用 =====
+    // ===== ログ出力 =====
     /// <summary>
     /// カードの色と値を出力
     /// </summary>

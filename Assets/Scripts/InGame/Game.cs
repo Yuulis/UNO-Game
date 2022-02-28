@@ -19,14 +19,13 @@ public class Game
         Turn turn = new Turn(deck, m_player_1, m_player_2);
 
         int turn_cnt = 0;
-        string winner = "0";
-
+        string winner;
         while (true)
         {
             turn_cnt++;
             Card open_card = turn.m_open_card;
 
-            // デバッグ用
+            // ログ出力
             Debug.Log("========== TURN" + turn_cnt.ToString() + " ==========");
             Debug.Log("Current open card : " + turn.m_open_card.ShowCard(turn.m_open_card));
 
@@ -58,17 +57,18 @@ public class Game
                 }
             }
 
-            // デバッグ用
+            // ログ出力
             now_player.ShowHand();
             now_player.ShowPlayableHand(open_card);
 
+            // プレイヤーのプレイ
             turn.Action(now_player, other_player);
 
             if (now_player.CheckWin())
             {
                 winner = now_player.m_name;
 
-                // デバッグ用
+                // ログ出力
                 Debug.Log(winner + " has won!");
 
                 break;
@@ -77,7 +77,7 @@ public class Game
             {
                 winner = other_player.m_name;
 
-                // デバッグ用
+                // ログ出力
                 Debug.Log(winner + " has won!");
 
                 break;
@@ -87,7 +87,7 @@ public class Game
             {
                 if (now_player.m_played_card.m_value == "SKIP" || now_player.m_played_card.m_value == "REV")
                 {
-                    // デバッグ用
+                    // ログ出力
                     Debug.Log(now_player.m_name + " has another turn");
 
                     turn_cnt--;

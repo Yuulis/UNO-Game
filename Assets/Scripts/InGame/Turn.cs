@@ -12,7 +12,7 @@ public class Turn
     Player m_player_1;
     Player m_player_2;
 
-    // オープンカード(捨て札リストの一番上のカード)
+    // オープンカード(捨て山の一番上のカード)
     public Card m_open_card;
 
     public Turn(Deck deck, Player player_1, Player player_2)
@@ -53,7 +53,7 @@ public class Turn
             }
         }
 
-        // デバッグ用
+        // ログ出力
         Debug.Log("The first open card is " + m_open_card.ShowCard(m_open_card));
 
         for (int i = 0; i < 7; i++)
@@ -179,7 +179,7 @@ public class Turn
         {
             int penalty_cards = cnt * penalty;
 
-            // デバッグ用
+            // ログ出力
             Debug.Log(now_player.m_name + " has to draw " + penalty_cards.ToString() + " cards");
 
             for (int i = 0; i < penalty_cards; i++)
@@ -191,7 +191,7 @@ public class Turn
         {
             int penalty_cards = cnt * penalty;
 
-            // デバッグ用
+            // ログ出力
             Debug.Log(other_player.m_name + " has to draw " + penalty_cards.ToString() + " cards");
 
             for (int i = 0; i < penalty_cards; i++)

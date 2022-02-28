@@ -10,7 +10,7 @@ public class Deck
     // 山札
     List<Card> m_cards;
 
-    // 捨て札リスト
+    // 捨て山
     List<Card> m_discarded_cards;
 
     public Deck()
@@ -27,7 +27,7 @@ public class Deck
     /// </summary>
     public void BuildDeck()
     {
-        // カード色(赤, 黄, 緑, 青) spはワイルドカードのみが持つ色
+        // カード色(赤, 黄, 緑, 青)、spはワイルドカードのみが持つ色
         string[] colors = { "r", "y", "g", "b" };
 
         // アクションカード(スキップ, リバース, ドロー2)
@@ -92,7 +92,7 @@ public class Deck
     }
 
     /// <summary>
-    /// プレイヤーの捨て札を捨て札リストに追加
+    /// プレイヤーの捨て札を捨て山に追加
     /// </summary>
     /// <param name="card">捨て札</param>
     public void Discard(Card card)
@@ -116,29 +116,34 @@ public class Deck
 
         Card card = m_cards[0];
         m_cards.RemoveAt(0);
+
         return card;
     }
 
-    // ===== デバッグ用 =====
+    // ===== ログ出力 =====
     /// <summary>
     /// 山札のカードを一括出力
     /// </summary>
     public void ShowDeck()
     {
+        string s = "";
         foreach (Card card in m_cards)
         {
-            card.ShowCard(card);
+            s += card.ShowCard(card) + " ,";
         }
+        Debug.Log("Deck : " + s);
     }
 
     /// <summary>
-    /// 捨て札リストのカードを一括出力
+    /// 捨て山のカードを一括出力
     /// </summary>
     public void ShowDiscardedDeck()
     {
+        string s = "";
         foreach (Card card in m_discarded_cards)
         {
-            card.ShowCard(card);
+            s += card.ShowCard(card) + " ,";
         }
+        Debug.Log("Discarded deck : " + s);
     }
 }

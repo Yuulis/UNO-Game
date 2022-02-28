@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     // ゲームオブジェクト
     Game game;
 
-    //* 4プレイヤー対戦用
+    // 4プレイヤー対戦用
     // プレイヤー名のリスト
     List<string> playerNames = new List<string>();
 
