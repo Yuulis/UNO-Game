@@ -11,7 +11,7 @@ public class Game
     // 親プレイヤー名
     string m_first_Player_name;
 
-    public Game(string player_1_name, string player_2_name, string first_Player_name)
+    public Game(List<string> playersName, string player_1_name, string player_2_name, string first_Player_name)
     {
         m_player_1 = new Player(player_1_name);
         m_player_2 = new Player(player_2_name);

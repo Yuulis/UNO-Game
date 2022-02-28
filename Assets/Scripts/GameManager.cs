@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     // ゲームオブジェクト
     Game game;
 
-    // 4プレイヤー対戦用
     // プレイヤー名のリスト
     List<string> playerNames = new List<string>();
 
@@ -15,7 +14,11 @@ public class GameManager : MonoBehaviour
     {
         playerNames.Add("Bob");
         playerNames.Add("Alex");
-        game = new Game(playerNames[0], playerNames[1], playerNames[0]);
+        playerNames.Add("Mike");
+        playerNames.Add("Mary");
+
+        int x = Random.Range(0, 3 + 1);
+        game = new Game(playerNames, playerNames[0], playerNames[1], playerNames[x]);
     }
 
     void Update()
