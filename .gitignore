@@ -5,6 +5,7 @@
 *.fake
 *.ionide
 
+.vs/*
 **/Library/
 **/Logs/
 **/obj/
