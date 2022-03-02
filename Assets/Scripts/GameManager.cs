@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -17,8 +19,11 @@ public class GameManager : MonoBehaviour
         playerNames.Add("Mike");
         playerNames.Add("Mary");
 
-        int x = Random.Range(0, 3 + 1);
-        game = new Game(playerNames, playerNames[0], playerNames[1], playerNames[x]);
+        List<string> temp = new List<string>();
+        temp = playerNames.OrderBy(i => Guid.NewGuid()).ToList();
+        playerNames = temp;
+
+        game = new Game(playerNames);
     }
 
     void Update()

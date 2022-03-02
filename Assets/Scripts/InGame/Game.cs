@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class Game
 {
-    // プレイヤーオブジェクト
-    Player m_player_1;
-    Player m_player_2;
+    // プレイヤーリスト
+    List<Player> m_players;
 
-    // 親プレイヤー名
-    string m_first_Player_name;
-
-    public Game(List<string> playersName, string player_1_name, string player_2_name, string first_Player_name)
+    public Game(List<string> playersName)
     {
-        m_player_1 = new Player(player_1_name);
-        m_player_2 = new Player(player_2_name);
+        m_players = new List<Player>();
+        foreach (string name in playersName)
+        {
+            m_players.Add(new Player(name));
+        }
         Deck deck = new Deck();
-        Turn turn = new Turn(deck, m_player_1, m_player_2);
+        Turn turn = new Turn(deck, m_players);
 
         int turn_cnt = 0;
         string winner;
@@ -29,59 +28,30 @@ public class Game
             Debug.Log("========== TURN" + turn_cnt.ToString() + " ==========");
             Debug.Log("Current open card : " + turn.m_open_card.ShowCard(turn.m_open_card));
 
-            Player now_player, other_player;
-            if (m_first_Player_name == m_player_1.m_name)
-            {
-                if (turn_cnt % 2 == 1)
-                {
-                    now_player = m_player_1;
-                    other_player = m_player_2;
-                }
-                else
-                {
-                    now_player = m_player_2;
-                    other_player = m_player_1;
-                }
-            }
-            else
-            {
-                if (turn_cnt % 2 == 1)
-                {
-                    now_player = m_player_2;
-                    other_player = m_player_1;
-                }
-                else
-                {
-                    now_player = m_player_1;
-                    other_player = m_player_2;
-                }
-            }
+            Player now_player = m_players[turn_cnt % 4];
 
             // ログ出力
             now_player.ShowHand();
             now_player.ShowPlayableHand(open_card);
 
             // プレイヤーのプレイ
-            turn.Action(now_player, other_player);
+            turn.Action(turn_cnt);
 
-            if (now_player.CheckWin())
+            bool flag = false;
+            foreach (Player player in m_players)
             {
-                winner = now_player.m_name;
+                if (player.CheckWin())
+                {
+                    winner = player.m_name;
+                    flag = true;
 
-                // ログ出力
-                Debug.Log(winner + " has won!");
+                    // ログ出力
+                    Debug.Log(winner + " has won!");
 
-                break;
+                    break;
+                }
             }
-            if (other_player.CheckWin())
-            {
-                winner = other_player.m_name;
-
-                // ログ出力
-                Debug.Log(winner + " has won!");
-
-                break;
-            }
+            if (flag) break;
 
             if (now_player.m_played_card != null)
             {
