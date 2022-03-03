@@ -5,11 +5,10 @@ using UnityEngine;
 public class Game
 {
     // プレイヤーリスト
-    List<Player> m_players;
+    List<Player> m_players = new List<Player>();
 
     public Game(List<string> playersName)
     {
-        m_players = new List<Player>();
         foreach (string name in playersName)
         {
             m_players.Add(new Player(name));
@@ -41,7 +40,7 @@ public class Game
             Card open_card = turn.m_open_card;
 
             // ログ出力
-            Debug.Log("========== TURN" + turn_cnt.ToString() + " - " + player_cnt.ToString() + "P ==========");
+            Debug.Log("========== TURN" + turn_cnt.ToString() + " - " + (player_cnt + 1).ToString() + "P ==========");
             Debug.Log("Current open card : " + turn.m_open_card.ShowCard());
 
             Player now_player = m_players[player_cnt];

@@ -7,17 +7,23 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // ゲームオブジェクト
-    private Game game;
+    Game game;
 
     // プレイヤー名のリスト
     List<string> playerNames = new List<string>();
 
+    // プレイヤー名の候補リスト
+    public List<string> candidate_playerName;
+
+    // 参加プレイヤー数
+    public int participants;
+
     void Start()
     {
-        playerNames.Add("Bob");
-        playerNames.Add("Alex");
-        playerNames.Add("Mike");
-        playerNames.Add("Mary");
+        for (int i = 0; i < participants; i++)
+        {
+            playerNames.Add(candidate_playerName[i]);
+        }
 
         List<string> temp = new List<string>();
         temp = playerNames.OrderBy(i => Guid.NewGuid()).ToList();

@@ -355,6 +355,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e5b59eba0c3f1648bc031a8336c2fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  candidate_playerName:
+  - Bob
+  - Alex
+  - Mike
+  - Mary
+  - Henry
+  - James
+  - Joe
+  - Sara
+  - Mei
+  - Ken
+  participants: 10
 --- !u!4 &1668265556
 Transform:
   m_ObjectHideFlags: 0
