@@ -68,7 +68,7 @@ public class Player
         EvaluateHand(open_card);
 
         // ログ出力
-        Debug.Log(m_name + " draws " + card.ShowCard(card));
+        Debug.Log(m_name + " draws " + card.ShowCard());
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public class Player
     /// <param name="deck">山札</param>
     public void RandomPlay(Deck deck)
     {
-        Random.InitState(System.DateTime.Now.Millisecond);
+        Random.InitState(DateTime.Now.Millisecond);
         m_hand_playable = m_hand_playable.OrderBy(i => Guid.NewGuid()).ToList();
         foreach (Card card in m_hand)
         {
@@ -89,7 +89,7 @@ public class Player
                 deck.Discard(card);
 
                 // ログ出力
-                Debug.Log(m_name + " plays " + card.ShowCard(card));
+                Debug.Log(m_name + " plays " + card.ShowCard());
 
                 break;
             }
@@ -131,7 +131,7 @@ public class Player
                 EvaluateHand(open_card);
 
                 // ログ出力
-                Debug.Log(m_name + " counters with " + card.ShowCard(card));
+                Debug.Log(m_name + " counters with " + card.ShowCard());
 
                 break;
             }
@@ -145,9 +145,10 @@ public class Player
     public void ShowHand()
     {
         string s = "";
-        foreach (Card card in m_hand)
+        for (int i = 0; i < m_hand.Count; i++)
         {
-            s += card.ShowCard(card) + ", ";
+            s += m_hand[i].ShowCard();
+            if (i + 1 != m_hand.Count) s += " ,";
         }
         Debug.Log(m_name + "'s hand : " + s);
     }
@@ -167,9 +168,10 @@ public class Player
         } 
 
         string s = "";
-        foreach (Card card in m_hand_playable)
+        for (int i = 0; i < m_hand_playable.Count; i++)
         {
-            s += card.ShowCard(card) + ", ";
+            s += m_hand_playable[i].ShowCard();
+            if (i + 1 != m_hand_playable.Count) s += " ,";
         }
         Debug.Log(m_name + "'s playable hand : " + s);
     }

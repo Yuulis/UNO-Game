@@ -38,8 +38,8 @@ public class Card
     /// <returns>
     /// "(色) - (値)"
     /// </returns>
-    public string ShowCard(Card card)
+    public string ShowCard()
     {
-        return card.m_color + "-" + card.m_value;
+        return this.m_color + "-" + this.m_value;
     }
 }
