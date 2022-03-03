@@ -68,9 +68,9 @@ public class Turn
     /// </summary>
     /// <param name="player">現ターンでプレイ中のプレイヤー</param>
     /// <param name="opponent">それ以外のプレイヤー</param>    
-    public void Action(int turn_cnt)
+    public void Action(int player_cnt)
     {
-        Player now_player = m_players[turn_cnt % players_num];
+        Player now_player = m_players[player_cnt];
 
         now_player.EvaluateHand(m_open_card);
 
@@ -110,8 +110,8 @@ public class Turn
 
         if (now_player.m_played_card != null)
         {
-            if (now_player.m_played_card.m_value == "DT") ActionPlus(turn_cnt, 2);
-            if (now_player.m_played_card.m_value == "WDF") ActionPlus(turn_cnt, 4);
+            if (now_player.m_played_card.m_value == "DT") ActionPlus(player_cnt, 2);
+            if (now_player.m_played_card.m_value == "WDF") ActionPlus(player_cnt, 4);
         }
     }
 
@@ -121,7 +121,7 @@ public class Turn
     /// <param name="player">現ターンでプレイ中のプレイヤー(カードを出したプレイヤー)</param>
     /// <param name="opponent">それ以外のプレイヤー</param>
     /// <param name="penalty">引くカードの枚数</param>
-    public void ActionPlus(int turn_cnt, int penalty)
+    public void ActionPlus(int player_cnt, int penalty)
     {
         bool hit = true;
         int cnt = 1;
@@ -130,25 +130,25 @@ public class Turn
             hit = false;
             for (int i = 0; i < players_num; i++)
             {
-                foreach (Card card in m_players[(turn_cnt + cnt) % players_num].m_hand)
+                foreach (Card card in m_players[(player_cnt + cnt) % players_num].m_hand)
                 {
                     if (card.m_value == "DT" && penalty == 2)
                     {
-                        m_players[(turn_cnt + cnt) % players_num].CounterPlay(m_deck, m_open_card, card);
+                        m_players[(player_cnt + cnt) % players_num].CounterPlay(m_deck, m_open_card, card);
                         hit = true;
                         cnt++;
                         break;
                     }
                     else if (card.m_value == "WDF")
                     {
-                        m_players[(turn_cnt + cnt) % players_num].CounterPlay(m_deck, m_open_card, card);
+                        m_players[(player_cnt + cnt) % players_num].CounterPlay(m_deck, m_open_card, card);
                         hit = true;
                         cnt++;
                         break;
                     }
                 }
 
-                if (m_players[(turn_cnt + cnt) % players_num].CheckWin()) return;
+                if (m_players[(player_cnt + cnt) % players_num].CheckWin()) return;
                 if (!hit) break;
             }
         }
@@ -156,11 +156,11 @@ public class Turn
         int penalty_cards = cnt * penalty;
 
         // ログ出力
-        Debug.Log(m_players[(turn_cnt + cnt) % players_num].m_name + " has to draw " + penalty_cards.ToString() + " cards");
+        Debug.Log(m_players[(player_cnt + cnt) % players_num].m_name + " has to draw " + penalty_cards.ToString() + " cards");
 
         for (int i = 0; i < penalty_cards; i++)
         {
-            m_players[(turn_cnt + cnt) % players_num].DrawCard(m_deck, m_open_card);
+            m_players[(player_cnt + cnt) % players_num].DrawCard(m_deck, m_open_card);
         }
     }
 }

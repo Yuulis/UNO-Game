@@ -77,7 +77,7 @@ public class Player
     /// <param name="deck">山札</param>
     public void RandomPlay(Deck deck)
     {
-        Random.InitState(System.DateTime.Now.Millisecond);
+        Random.InitState(DateTime.Now.Millisecond);
         m_hand_playable = m_hand_playable.OrderBy(i => Guid.NewGuid()).ToList();
         foreach (Card card in m_hand)
         {

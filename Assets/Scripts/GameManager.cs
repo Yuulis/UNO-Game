@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // ゲームオブジェクト
-    Game game;
+    private Game game;
 
     // プレイヤー名のリスト
     List<string> playerNames = new List<string>();

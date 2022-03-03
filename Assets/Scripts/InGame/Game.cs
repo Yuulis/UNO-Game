@@ -18,24 +18,33 @@ public class Game
         Turn turn = new Turn(deck, m_players);
 
         int turn_cnt = 0;
+        int player_cnt = 0;
+        bool turn_rev = false;
         string winner;
         while (true)
         {
             turn_cnt++;
+
+            if (turn_rev) player_cnt++;
+            else player_cnt--;
+
+            if (player_cnt >= m_players.Count) player_cnt %= m_players.Count;
+            else if (player_cnt < 0) player_cnt = m_players.Count + player_cnt;
+
             Card open_card = turn.m_open_card;
 
             // ログ出力
-            Debug.Log("========== TURN" + turn_cnt.ToString() + " ==========");
+            Debug.Log("========== TURN" + turn_cnt.ToString() + " - " + player_cnt.ToString() + "P ==========");
             Debug.Log("Current open card : " + turn.m_open_card.ShowCard(turn.m_open_card));
 
-            Player now_player = m_players[turn_cnt % 4];
+            Player now_player = m_players[player_cnt];
 
             // ログ出力
             now_player.ShowHand();
             now_player.ShowPlayableHand(open_card);
 
             // プレイヤーのプレイ
-            turn.Action(turn_cnt);
+            turn.Action(player_cnt);
 
             bool flag = false;
             foreach (Player player in m_players)
@@ -55,12 +64,20 @@ public class Game
 
             if (now_player.m_played_card != null)
             {
-                if (now_player.m_played_card.m_value == "SKIP" || now_player.m_played_card.m_value == "REV")
+                if (now_player.m_played_card.m_value == "SKIP")
                 {
                     // ログ出力
-                    Debug.Log(now_player.m_name + " has another turn");
+                    Debug.Log("The next player of " + now_player.m_name + " will be skipped!");
 
-                    turn_cnt--;
+                    if (turn_rev) player_cnt--;
+                    else player_cnt++;
+                }
+                else if (now_player.m_played_card.m_value == "REV")
+                {
+                    // ログ出力
+                    Debug.Log("Turn will be reversed!");
+
+                    turn_rev = !turn_rev;
                 }
             }
         }
