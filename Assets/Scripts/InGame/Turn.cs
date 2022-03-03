@@ -52,7 +52,7 @@ public class Turn
         }
 
         // ログ出力
-        Debug.Log("The first open card is " + m_open_card.ShowCard(m_open_card));
+        Debug.Log("The first open card is " + m_open_card.ShowCard());
 
         for (int i = 0; i < 7; i++)
         {

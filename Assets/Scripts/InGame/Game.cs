@@ -21,21 +21,28 @@ public class Game
         int player_cnt = 0;
         bool turn_rev = false;
         string winner;
+
+        // ログ出力
+        Debug.Log("The first player is " + m_players[0].m_name);
+
         while (true)
         {
             turn_cnt++;
 
-            if (turn_rev) player_cnt++;
-            else player_cnt--;
+            if (turn_cnt != 1)
+            {
+                if (turn_rev) player_cnt--;
+                else player_cnt++;
 
-            if (player_cnt >= m_players.Count) player_cnt %= m_players.Count;
-            else if (player_cnt < 0) player_cnt = m_players.Count + player_cnt;
+                if (player_cnt >= m_players.Count) player_cnt %= m_players.Count;
+                else if (player_cnt < 0) player_cnt = m_players.Count + player_cnt;
+            }
 
             Card open_card = turn.m_open_card;
 
             // ログ出力
             Debug.Log("========== TURN" + turn_cnt.ToString() + " - " + player_cnt.ToString() + "P ==========");
-            Debug.Log("Current open card : " + turn.m_open_card.ShowCard(turn.m_open_card));
+            Debug.Log("Current open card : " + turn.m_open_card.ShowCard());
 
             Player now_player = m_players[player_cnt];
 
