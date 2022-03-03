@@ -127,9 +127,10 @@ public class Deck
     public void ShowDeck()
     {
         string s = "";
-        foreach (Card card in m_cards)
+        for (int i = 0; i < m_cards.Count; i++)
         {
-            s += card.ShowCard(card) + " ,";
+            s += m_cards[i].ShowCard();
+            if (i + 1 != m_cards.Count) s += " ,";
         }
         Debug.Log("Deck : " + s);
     }
@@ -140,9 +141,10 @@ public class Deck
     public void ShowDiscardedDeck()
     {
         string s = "";
-        foreach (Card card in m_discarded_cards)
+        for (int i = 0; i < m_discarded_cards.Count; i++)
         {
-            s += card.ShowCard(card) + " ,";
+            s += m_discarded_cards[i].ShowCard();
+            if (i + 1 != m_discarded_cards.Count) s += " ,";
         }
         Debug.Log("Discarded deck : " + s);
     }
