@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Game
+public class Game : MonoBehaviour 
 {
-    // プレイヤーリスト
-    List<Player> m_players = new List<Player>();
-
-    public Game(List<string> playersName)
+    public void GameSystem(List<string> playersName)
     {
         Debug.Log("New game has started!");
 
+        // プレイヤーリスト
+        List<Player> m_players = new List<Player>();
         foreach (string name in playersName)
         {
             m_players.Add(new Player(name));
         }
+
         Deck deck = new Deck();
         Turn turn = new Turn(deck, m_players);
 
@@ -25,6 +25,7 @@ public class Game
 
         Debug.Log("The first player is " + m_players[0].m_name);
 
+        // ゲーム開始
         while (true)
         {
             turn_cnt++;
@@ -83,10 +84,7 @@ public class Game
                 }
             }
         }
-    }
-
-    ~Game()
-    {
+        
         Debug.Log("This game has ended!");
     }
 }

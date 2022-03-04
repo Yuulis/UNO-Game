@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // ゲームオブジェクト
-    Game game;
+    // ゲームスクリプト
+    Game src_Game;
 
     // プレイヤー名のリスト
     List<string> playerNames = new List<string>();
@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Debug.unityLogger.logEnabled = logEnable;
+        src_Game = GameObject.Find("GameSystem").GetComponent<Game>();
 
         for (int i = 0; i < participants; i++)
         {
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
         temp = playerNames.OrderBy(i => Guid.NewGuid()).ToList();
         playerNames = temp;
 
-        game = new Game(playerNames);
+        src_Game.GameSystem(playerNames);
     }
 
     void Update()
