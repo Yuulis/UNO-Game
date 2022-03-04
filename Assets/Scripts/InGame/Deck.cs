@@ -120,7 +120,6 @@ public class Deck
         return card;
     }
 
-    // ===== ログ出力 =====
     /// <summary>
     /// 山札のカードを一括出力
     /// </summary>

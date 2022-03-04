@@ -366,7 +366,9 @@ MonoBehaviour:
   - Sara
   - Mei
   - Ken
-  participants: 10
+  participants: 4
+  rematch: 10
+  logEnable: 0
 --- !u!4 &1668265556
 Transform:
   m_ObjectHideFlags: 0

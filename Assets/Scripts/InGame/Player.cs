@@ -67,7 +67,6 @@ public class Player
         m_hand.Add(card);
         EvaluateHand(open_card);
 
-        // ログ出力
         Debug.Log(m_name + " draws " + card.ShowCard());
     }
 
@@ -88,7 +87,6 @@ public class Player
                 m_hand_playable.RemoveAt(m_hand_playable.Count - 1);
                 deck.Discard(card);
 
-                // ログ出力
                 Debug.Log(m_name + " plays " + card.ShowCard());
 
                 break;
@@ -113,7 +111,6 @@ public class Player
         string[] colors = { "r", "y", "g", "b" };
         int x = Random.Range(0, 3 + 1);
 
-        // ログ出力
         Debug.Log(m_name + " chooses " + colors[x]);
 
         return colors[x];
@@ -130,7 +127,6 @@ public class Player
                 deck.Discard(card);
                 EvaluateHand(open_card);
 
-                // ログ出力
                 Debug.Log(m_name + " counters with " + card.ShowCard());
 
                 break;
@@ -138,7 +134,6 @@ public class Player
         }
     }
 
-    // ===== ログ出力 =====
     /// <summary>
     /// 手札のカードを出力
     /// </summary>
