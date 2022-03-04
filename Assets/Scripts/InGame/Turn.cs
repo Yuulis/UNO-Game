@@ -20,7 +20,7 @@ public class Turn
         m_deck = deck;
         m_players = playersList;
         players_num = m_players.Count;
-        m_open_card = m_deck.DrawCard();
+        m_open_card = m_deck.DrawedCard();
 
         Initialize();
     }
@@ -43,15 +43,13 @@ public class Turn
             }
             catch (ArgumentNullException)
             {
-                m_open_card = m_deck.DrawCard();
+                m_open_card = m_deck.DrawedCard();
             }
             catch (FormatException)
             {
-                m_open_card = m_deck.DrawCard();
+                m_open_card = m_deck.DrawedCard();
             }
         }
-
-        Debug.Log("The first open card is " + m_open_card.ShowCard());
 
         for (int i = 0; i < 7; i++)
         {
@@ -60,6 +58,8 @@ public class Turn
                 player.DrawCard(m_deck, m_open_card);
             }
         }
+        
+        Debug.Log("The first open card is " + m_open_card.ShowCard());
     }
 
     /// <summary>

@@ -63,7 +63,7 @@ public class Player
     /// <param name="open_card">オープンカード</param>
     public void DrawCard(Deck deck, Card open_card)
     {
-        Card card = deck.DrawCard();
+        Card card = deck.DrawedCard();
         m_hand.Add(card);
         EvaluateHand(open_card);
 

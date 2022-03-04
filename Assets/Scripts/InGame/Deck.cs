@@ -106,7 +106,7 @@ public class Deck
     /// <returns>
     /// 山札から引いたカード
     /// </returns>
-    public Card DrawCard()
+    public Card DrawedCard()
     {
         if (m_cards.Count == 0)
         {
