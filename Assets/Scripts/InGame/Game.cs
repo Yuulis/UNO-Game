@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Game
+public class Game : MonoBehaviour 
 {
     // プレイヤーリスト
     List<Player> m_players = new List<Player>();
