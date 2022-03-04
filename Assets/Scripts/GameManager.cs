@@ -18,8 +18,16 @@ public class GameManager : MonoBehaviour
     // 参加プレイヤー数
     public int participants;
 
+    // 再戦回数
+    public int rematch;
+
+    // ログ出力の有無
+    public bool logEnable;
+
     void Start()
     {
+        Debug.unityLogger.logEnabled = logEnable;
+
         for (int i = 0; i < participants; i++)
         {
             playerNames.Add(candidate_playerName[i]);
@@ -34,6 +42,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 }

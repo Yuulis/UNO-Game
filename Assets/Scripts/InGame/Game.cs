@@ -9,6 +9,8 @@ public class Game
 
     public Game(List<string> playersName)
     {
+        Debug.Log("New game has started!");
+
         foreach (string name in playersName)
         {
             m_players.Add(new Player(name));
@@ -21,7 +23,6 @@ public class Game
         bool turn_rev = false;
         string winner;
 
-        // ログ出力
         Debug.Log("The first player is " + m_players[0].m_name);
 
         while (true)
@@ -39,13 +40,11 @@ public class Game
 
             Card open_card = turn.m_open_card;
 
-            // ログ出力
             Debug.Log("========== TURN" + turn_cnt.ToString() + " - " + (player_cnt + 1).ToString() + "P ==========");
             Debug.Log("Current open card : " + turn.m_open_card.ShowCard());
 
             Player now_player = m_players[player_cnt];
 
-            // ログ出力
             now_player.ShowHand();
             now_player.ShowPlayableHand(open_card);
 
@@ -60,7 +59,6 @@ public class Game
                     winner = player.m_name;
                     flag = true;
 
-                    // ログ出力
                     Debug.Log(winner + " has won!");
 
                     break;
@@ -72,7 +70,6 @@ public class Game
             {
                 if (now_player.m_played_card.m_value == "SKIP")
                 {
-                    // ログ出力
                     Debug.Log("The next player of " + now_player.m_name + " will be skipped!");
 
                     if (turn_rev) player_cnt--;
@@ -80,12 +77,16 @@ public class Game
                 }
                 else if (now_player.m_played_card.m_value == "REV")
                 {
-                    // ログ出力
                     Debug.Log("Turn will be reversed!");
 
                     turn_rev = !turn_rev;
                 }
             }
         }
+    }
+
+    ~Game()
+    {
+        Debug.Log("This game has ended!");
     }
 }
