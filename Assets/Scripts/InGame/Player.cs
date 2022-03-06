@@ -67,7 +67,7 @@ public class Player
         m_hand.Add(card);
         EvaluateHand(open_card);
 
-        Debug.Log(m_name + " draws " + card.ShowCard());
+        Debug.Log($"{m_name} draws {card.ShowCard()}");
     }
 
     /// <summary>
@@ -87,7 +87,7 @@ public class Player
                 m_hand_playable.RemoveAt(m_hand_playable.Count - 1);
                 deck.Discard(card);
 
-                Debug.Log(m_name + " plays " + card.ShowCard());
+                Debug.Log($"{ m_name} plays {card.ShowCard()}");
 
                 break;
             }
@@ -111,7 +111,7 @@ public class Player
         string[] colors = { "r", "y", "g", "b" };
         int x = Random.Range(0, 3 + 1);
 
-        Debug.Log(m_name + " chooses " + colors[x]);
+        Debug.Log($"{m_name} chooses {colors[x]}");
 
         return colors[x];
     }
@@ -127,7 +127,7 @@ public class Player
                 deck.Discard(card);
                 EvaluateHand(open_card);
 
-                Debug.Log(m_name + " counters with " + card.ShowCard());
+                Debug.Log($"{m_name} counters with {card.ShowCard()}");
 
                 break;
             }
@@ -145,7 +145,7 @@ public class Player
             s += m_hand[i].ShowCard();
             if (i + 1 != m_hand.Count) s += " ,";
         }
-        Debug.Log(m_name + "'s hand : " + s);
+        Debug.Log($"{m_name}'s hand : {s}");
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public class Player
 
         if (!(m_hand_playable.Count > 0))
         {
-            Debug.Log(m_name + " has no playable card");
+            Debug.Log($"{m_name} has no playable card");
             return;
         } 
 
@@ -168,6 +168,6 @@ public class Player
             s += m_hand_playable[i].ShowCard();
             if (i + 1 != m_hand_playable.Count) s += " ,";
         }
-        Debug.Log(m_name + "'s playable hand : " + s);
+        Debug.Log($"{m_name}'s playable hand : {s}");
     }
 }
