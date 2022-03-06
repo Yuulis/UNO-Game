@@ -9,8 +9,8 @@ public class Turn
     Deck m_deck;
 
     // プレイヤリスト
-    List<Player> m_players;
-    int players_num;
+    private List<Player> m_players;
+    private int players_num;
 
     // オープンカード(捨て山の一番上のカード)
     public Card m_open_card;

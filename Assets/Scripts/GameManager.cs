@@ -8,28 +8,28 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     // 参加プレイヤー数
-    public int participants;
-
-    // プレイヤー名のリスト
-    List<string> m_playerNames;
+    [SerializeField] private int participants;
 
     // プレイヤー名の候補リスト
-    public List<string> candidate_playerName;
+    [SerializeField] private List<string> candidate_playerName;
+
+    // プレイヤー名のリスト
+    private List<string> m_playerNames;
 
     // プレイヤーリスト
-    List<Player> m_players;
+    [HideInInspector] List<Player> m_players;
 
     // 再戦回数
     public int rematch;
-    int match_cnt;
+    private int match_cnt;
 
     // ゲームデータ
-    Deck m_deck;
-    Turn m_turn;
-    int turn_cnt;
-    int player_cnt;
-    bool turn_rev;
-    string winner;
+    private Deck m_deck;
+    private Turn m_turn;
+    private int turn_cnt;
+    private int player_cnt;
+    private bool turn_rev;
+    [HideInInspector] string winner;
 
     // ログ出力の有無
     public bool logEnable;
