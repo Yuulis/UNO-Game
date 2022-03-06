@@ -9,8 +9,8 @@ public class Turn
     Deck m_deck;
 
     // プレイヤリスト
-    List<Player> m_players;
-    int players_num;
+    private List<Player> m_players;
+    private int players_num;
 
     // オープンカード(捨て山の一番上のカード)
     public Card m_open_card;
@@ -59,7 +59,7 @@ public class Turn
             }
         }
         
-        Debug.Log("The first open card is " + m_open_card.ShowCard());
+        Debug.Log($"The first open card is {m_open_card.ShowCard()}");
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ public class Turn
 
         int penalty_cards = cnt * penalty;
 
-        Debug.Log(m_players[(player_cnt + cnt) % players_num].m_name + " has to draw " + penalty_cards.ToString() + " cards");
+        Debug.Log($"{m_players[(player_cnt + cnt) % players_num].m_name} has to draw {penalty_cards} cards");
 
         for (int i = 0; i < penalty_cards; i++)
         {
