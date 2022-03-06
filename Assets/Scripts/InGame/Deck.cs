@@ -131,7 +131,7 @@ public class Deck
             s += m_cards[i].ShowCard();
             if (i + 1 != m_cards.Count) s += " ,";
         }
-        Debug.Log("Deck : " + s);
+        Debug.Log($"Deck : {s}");
     }
 
     /// <summary>
@@ -145,6 +145,6 @@ public class Deck
             s += m_discarded_cards[i].ShowCard();
             if (i + 1 != m_discarded_cards.Count) s += " ,";
         }
-        Debug.Log("Discarded deck : " + s);
+        Debug.Log($"Discarded deck : {s}");
     }
 }
