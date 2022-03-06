@@ -19,9 +19,9 @@ public class GameManager : MonoBehaviour
     // プレイヤーリスト
     List<Player> m_players;
 
-
     // 再戦回数
     public int rematch;
+    int match_cnt;
 
     // ゲームデータ
     Deck m_deck;
@@ -39,40 +39,22 @@ public class GameManager : MonoBehaviour
         // 読み込みなど
         Debug.unityLogger.logEnabled = logEnable;
 
-
-        Debug.Log("New game has started!");
-
-        // プレイヤー名登録
-        m_playerNames = new List<string>();
-        for (int i = 0; i < participants; i++)
-        {
-            m_playerNames.Add(candidate_playerName[i]);
-        }
-        List<string> temp = new List<string>();
-        temp = m_playerNames.OrderBy(i => Guid.NewGuid()).ToList();
-        m_playerNames = temp;
-
-        // プレイヤーリストの作成
-        m_players = new List<Player>();
-        foreach (string name in m_playerNames)
-        {
-            m_players.Add(new Player(name));
-        }
-
-        // データ初期化
-        m_deck = new Deck();
-        m_turn = new Turn(m_deck, m_players);
-        turn_cnt = 0;
-        player_cnt = 0;
-        turn_rev = false;
-        winner = null;
-
-        Debug.Log($"The first player is {m_players[0].m_name}");
+        match_cnt = 0;
+        GameInitialize();
     }
 
     void Update()
     {
-        if (winner != null) return;
+        if (winner != null) {
+            if (match_cnt > 0 && match_cnt < rematch) GameInitialize();
+            else if (match_cnt == -1) return;
+            else
+            {
+                match_cnt = -1;
+                Debug.Log("All rounds have ended!");
+                return;
+            }
+        }
         
         turn_cnt++;
 
@@ -125,5 +107,43 @@ public class GameManager : MonoBehaviour
 
             turn_rev = !turn_rev;
         }
+    }
+
+    /// <summary>
+    /// ゲームの初期化
+    /// </summary>
+    private void GameInitialize()
+    {
+        match_cnt++;
+
+        Debug.Log("New game has started!");
+        Debug.Log($"########## Round{match_cnt} ##########");
+
+        // プレイヤー名登録
+        m_playerNames = new List<string>();
+        for (int i = 0; i < participants; i++)
+        {
+            m_playerNames.Add(candidate_playerName[i]);
+        }
+        List<string> temp = new List<string>();
+        temp = m_playerNames.OrderBy(i => Guid.NewGuid()).ToList();
+        m_playerNames = temp;
+
+        // プレイヤーリストの作成
+        m_players = new List<Player>();
+        foreach (string name in m_playerNames)
+        {
+            m_players.Add(new Player(name));
+        }
+
+        // データ初期化
+        m_deck = new Deck();
+        m_turn = new Turn(m_deck, m_players);
+        turn_cnt = 0;
+        player_cnt = 0;
+        turn_rev = false;
+        winner = null;
+
+        Debug.Log($"The first player is {m_players[0].m_name}");
     }
 }

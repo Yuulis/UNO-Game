@@ -111,6 +111,7 @@ public class Deck
         if (m_cards.Count == 0)
         {
             m_cards = m_discarded_cards;
+            ShuffleDeck();
             m_discarded_cards.Clear();
         }
 
