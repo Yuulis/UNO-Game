@@ -10,10 +10,14 @@ public class Card
     // カードの値(0~9, SKIP, REV, DT, WILD, WDF)
     public string m_value;
 
-    public Card(string color, string value)
+    // カードの裏表(true -> 表  false -> 裏)
+    public bool m_display;
+
+    public Card(string color, string value, bool display)
     {
         m_color = color;
         m_value = value;
+        m_display = display;
     }
 
     /// <summary>

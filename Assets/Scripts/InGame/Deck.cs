@@ -39,7 +39,7 @@ public class Deck
         List<Card> cards_zero = new List<Card>();
         for (int i = 0; i < 4; i++)
         {
-            cards_zero.Add(new Card(colors[i], "0"));
+            cards_zero.Add(new Card(colors[i], "0", false));
         }
 
         List<Card> cards_num = new List<Card>();
@@ -49,7 +49,7 @@ public class Deck
             {
                 for (int k = 0; k < 9; k++)
                 {
-                    cards_num.Add(new Card(colors[j], k.ToString()));
+                    cards_num.Add(new Card(colors[j], k.ToString(), false));
                 }
             }
         }
@@ -61,7 +61,7 @@ public class Deck
             {
                 for (int k = 0; k < 3; k++)
                 {
-                    cards_action.Add(new Card(colors[j], actions[k]));
+                    cards_action.Add(new Card(colors[j], actions[k], false));
                 }
             }
         }
@@ -71,7 +71,7 @@ public class Deck
         {
             for (int j = 0; j < 2; j++)
             {
-                cards_special.Add(new Card("sp", specials[j]));
+                cards_special.Add(new Card("sp", specials[j], false));
             }
         }
 
