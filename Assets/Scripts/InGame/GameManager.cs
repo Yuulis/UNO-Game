@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     // Cardオブジェクト
     DisplayCard openCard_displayCard;
+    DisplayCard deckTopCard_displayCard;
 
     // ログ出力の有無
     public bool logEnable;
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
         Debug.unityLogger.logEnabled = logEnable;
         cardSprites = Resources.LoadAll<Sprite>("UNO-Cards").ToList();
         openCard_displayCard = GameObject.Find("OpenCard").GetComponent<DisplayCard>();
+        deckTopCard_displayCard = GameObject.Find("DeckTopCard").GetComponent<DisplayCard>();
 
         match_cnt = 0;
         timer = 0f;
@@ -133,6 +135,8 @@ public class GameManager : MonoBehaviour
 
         Card open_card = m_turn.m_open_card;
         openCard_displayCard.DisplayOpenCard(m_turn);
+        deckTopCard_displayCard.DisplayDeckTopCard();
+        
 
         Debug.Log($"========== TURN{turn_cnt} - {player_cnt + 1}P ==========");
         Debug.Log($"Current open card : {m_turn.m_open_card.ShowCard()}");

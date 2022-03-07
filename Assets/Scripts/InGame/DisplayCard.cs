@@ -13,9 +13,9 @@ public class DisplayCard : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void DisplayDeckTopCard(Deck deck)
+    public void DisplayDeckTopCard()
     {
-        spriteRenderer.sprite = gameManager.cardSprites[deck.m_cards[0].m_sprite_id];
+        spriteRenderer.sprite = gameManager.cardSprites[58];
     }
 
     public void DisplayOpenCard(Turn turn)
