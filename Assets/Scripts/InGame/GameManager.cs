@@ -31,6 +31,12 @@ public class GameManager : MonoBehaviour
     private bool turn_rev;
     [HideInInspector] string winner;
 
+    // スプライトデータ
+    public List<Sprite> cardSprites;
+
+    // Cardオブジェクト
+    DisplayCard openCard_displayCard;
+
     // ログ出力の有無
     public bool logEnable;
 
@@ -38,6 +44,8 @@ public class GameManager : MonoBehaviour
     {
         // 読み込みなど
         Debug.unityLogger.logEnabled = logEnable;
+        cardSprites = Resources.LoadAll<Sprite>("UNO-Cards").ToList();
+        openCard_displayCard = GameObject.Find("OpenCard").GetComponent<DisplayCard>();
 
         match_cnt = 0;
         GameInitialize();
@@ -71,6 +79,8 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"========== TURN{turn_cnt} - {player_cnt + 1}P ==========");
         Debug.Log($"Current open card : {m_turn.m_open_card.ShowCard()}");
+
+        openCard_displayCard.DisplayOpenCard(m_turn);
 
         Player now_player = m_players[player_cnt];
 

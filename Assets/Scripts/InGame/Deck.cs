@@ -8,10 +8,10 @@ using Random = UnityEngine.Random;
 public class Deck
 {
     // 山札
-    List<Card> m_cards;
+    public List<Card> m_cards;
 
     // 捨て山
-    List<Card> m_discarded_cards;
+    public List<Card> m_discarded_cards;
 
     public Deck()
     {
@@ -27,58 +27,57 @@ public class Deck
     /// </summary>
     public void BuildDeck()
     {
-        // カード色(赤, 黄, 緑, 青)、spはワイルドカードのみが持つ色
-        string[] colors = { "r", "y", "g", "b" };
+        // カード色、spはワイルドカードのみが持つ色
+        string[] colors = { "r", "y", "g", "b", "sp" };
 
-        // アクションカード(スキップ, リバース, ドロー2)
-        string[] actions = { "SKIP", "REV", "DT" };
+        // カード値
+        string[] values = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "DT", "REV", "SKIP" };
 
-        // ワイルドカード(ワイルド, ワイルドドロー4)
-        string[] specials = { "WILD", "WDF" };
+        // sp用カード値
+        string[] specials = { "WDF", "WILD" };
 
-        List<Card> cards_zero = new List<Card>();
-        for (int i = 0; i < 4; i++)
+        int card_id = 0;
+        for (int i = 0; i < 5; i++)
         {
-            cards_zero.Add(new Card(colors[i], "0", false));
-        }
-
-        List<Card> cards_num = new List<Card>();
-        for (int i = 0; i < 2; i++)
-        {
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < 13; j++)
             {
-                for (int k = 0; k < 9; k++)
+                if (i != 4)
                 {
-                    cards_num.Add(new Card(colors[j], k.ToString(), false));
+                    // 0は各色1枚のみ
+                    if (j == 0) m_cards.Add(new Card(colors[i], values[j], card_id, false));
+
+                    // 他は4枚ずつ
+                    else
+                    {
+                        m_cards.Add(new Card(colors[i], values[j], card_id, false));
+                        m_cards.Add(new Card(colors[i], values[j], card_id, false));
+                    }
+                    card_id++;
+                }
+
+                // spカードに対して
+                else
+                {
+                    if (j == 0)
+                    {
+                        for (int k = 0; k < 4; k++)
+                        {
+                            m_cards.Add(new Card(colors[i], specials[j], card_id, false));
+                        }
+                        card_id++;
+                    }
+                    else if (j == 1)
+                    {
+                        for (int k = 0; k < 4; k++)
+                        {
+                            m_cards.Add(new Card(colors[i], specials[j], card_id, false));
+                        }
+                        card_id++;
+                    }
+                    else continue;
                 }
             }
         }
-
-        List<Card> cards_action = new List<Card>();
-        for (int i = 0; i < 2; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 3; k++)
-                {
-                    cards_action.Add(new Card(colors[j], actions[k], false));
-                }
-            }
-        }
-
-        List<Card> cards_special = new List<Card>();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 2; j++)
-            {
-                cards_special.Add(new Card("sp", specials[j], false));
-            }
-        }
-
-        m_cards.AddRange(cards_zero);
-        m_cards.AddRange(cards_num);
-        m_cards.AddRange(cards_action);
-        m_cards.AddRange(cards_special);
     }
 
     /// <summary>

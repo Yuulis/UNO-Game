@@ -6,7 +6,7 @@ using UnityEngine;
 public class Turn
 {
     // 山札
-    Deck m_deck;
+    public Deck m_deck;
 
     // プレイヤリスト
     private List<Player> m_players;

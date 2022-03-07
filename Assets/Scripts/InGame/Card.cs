@@ -10,13 +10,17 @@ public class Card
     // カードの値(0~9, SKIP, REV, DT, WILD, WDF)
     public string m_value;
 
+    // GameManager.CardSpritesの参照id
+    public int m_sprite_id;
+
     // カードの裏表(true -> 表  false -> 裏)
     public bool m_display;
 
-    public Card(string color, string value, bool display)
+    public Card(string color, string value, int sprite_id, bool display)
     {
         m_color = color;
         m_value = value;
+        m_sprite_id = sprite_id;
         m_display = display;
     }
 
