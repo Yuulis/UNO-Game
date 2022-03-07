@@ -560,7 +560,7 @@ MonoBehaviour:
   matchTimes: 1
   cardSprites: []
   logEnable: 1
-  updateTime: 0.5
+  updateTime: 0.25
 --- !u!4 &1668265556
 Transform:
   m_ObjectHideFlags: 0

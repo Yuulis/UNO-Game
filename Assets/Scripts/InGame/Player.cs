@@ -94,9 +94,23 @@ public class Player
         }
 
         // 色指定できるカードなら、色を選択させる
-        if (m_played_card.m_color == "sp" || m_played_card.m_value == "WDF")
+        if (m_played_card.m_color == "sp")
         {
             m_played_card.m_color = ChooseColor();
+            if (m_played_card.m_value == "WDF")
+            {
+                if (m_played_card.m_color == "b") m_played_card.m_sprite_id += 1;
+                if (m_played_card.m_color == "g") m_played_card.m_sprite_id += 2;
+                if (m_played_card.m_color == "r") m_played_card.m_sprite_id += 3;
+                if (m_played_card.m_color == "y") m_played_card.m_sprite_id += 4;
+            }
+            if (m_played_card.m_value == "WILD")
+            {
+                if (m_played_card.m_color == "b") m_played_card.m_sprite_id += 1;
+                if (m_played_card.m_color == "g") m_played_card.m_sprite_id += 2;
+                if (m_played_card.m_color == "r") m_played_card.m_sprite_id += 3;
+                if (m_played_card.m_color == "y") m_played_card.m_sprite_id += 4;
+            }
         }
     }
 

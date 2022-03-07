@@ -64,7 +64,7 @@ public class Deck
                         {
                             m_cards.Add(new Card(colors[i], specials[j], card_id, false));
                         }
-                        card_id++;
+                        card_id += 5;
                     }
                     else if (j == 1)
                     {
@@ -72,7 +72,7 @@ public class Deck
                         {
                             m_cards.Add(new Card(colors[i], specials[j], card_id, false));
                         }
-                        card_id++;
+                        card_id += 5;
                     }
                     else continue;
                 }
