@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] List<Player> m_players;
 
     // 再戦回数
-    public int rematch;
+    public int matchTimes;
     private int match_cnt;
 
     // ゲームデータ
@@ -32,13 +32,19 @@ public class GameManager : MonoBehaviour
     [HideInInspector] string winner;
 
     // スプライトデータ
-    public List<Sprite> cardSprites;
+    [HideInInspector] public List<Sprite> cardSprites;
 
     // Cardオブジェクト
     DisplayCard openCard_displayCard;
 
     // ログ出力の有無
     public bool logEnable;
+
+    // Updateタイマー
+    private float timer;
+
+    // Update間隔
+    [SerializeField] float updateTime;
 
     void Start()
     {
@@ -48,74 +54,17 @@ public class GameManager : MonoBehaviour
         openCard_displayCard = GameObject.Find("OpenCard").GetComponent<DisplayCard>();
 
         match_cnt = 0;
+        timer = 0f;
         GameInitialize();
     }
 
     void Update()
     {
-        if (winner != null) {
-            if (match_cnt > 0 && match_cnt < rematch) GameInitialize();
-            else if (match_cnt == -1) return;
-            else
-            {
-                match_cnt = -1;
-                Debug.Log("All rounds have ended!");
-                return;
-            }
-        }
-        
-        turn_cnt++;
+        timer += Time.deltaTime;
 
-        if (turn_cnt != 1)
-        {
-            if (turn_rev) player_cnt--;
-            else player_cnt++;
-
-            if (player_cnt >= m_players.Count) player_cnt %= m_players.Count;
-            else if (player_cnt < 0) player_cnt = m_players.Count + player_cnt;
-        }
-
-        Card open_card = m_turn.m_open_card;
-
-        Debug.Log($"========== TURN{turn_cnt} - {player_cnt + 1}P ==========");
-        Debug.Log($"Current open card : {m_turn.m_open_card.ShowCard()}");
-
-        openCard_displayCard.DisplayOpenCard(m_turn);
-
-        Player now_player = m_players[player_cnt];
-
-        now_player.ShowHand();
-        now_player.ShowPlayableHand(open_card);
-
-        // プレイヤーのプレイ
-        m_turn.Action(player_cnt);
-
-        foreach (Player player in m_players)
-        {
-            if (player.CheckWin())
-            {
-                winner = player.m_name;
-
-                Debug.Log($"{winner} has won!");
-                Debug.Log("This game has ended!");
-            }
-        }
-
-        if (winner != null) return;
-        if (now_player.m_played_card == null) return;
-
-        if (now_player.m_played_card.m_value == "SKIP")
-        {
-            Debug.Log($"The next player of {now_player.m_name} will be skipped!");
-
-            if (turn_rev) player_cnt--;
-            else player_cnt++;
-        }
-        else if (now_player.m_played_card.m_value == "REV")
-        {
-            Debug.Log("Turn will be reversed!");
-
-            turn_rev = !turn_rev;
+        if (timer >= updateTime) {
+            StartCoroutine(GameProcess());
+            timer = 0f;
         }
     }
 
@@ -155,5 +104,76 @@ public class GameManager : MonoBehaviour
         winner = null;
 
         Debug.Log($"The first player is {m_players[0].m_name}");
+    }
+
+    IEnumerator GameProcess()
+    {
+        if (winner != null)
+        {
+            if (match_cnt > 0 && match_cnt < matchTimes) GameInitialize();
+            else if (match_cnt == -1) yield break;
+            else
+            {
+                match_cnt = -1;
+                Debug.Log("All rounds have ended!");
+                yield break;
+            }
+        }
+
+        turn_cnt++;
+
+        if (turn_cnt != 1)
+        {
+            if (turn_rev) player_cnt--;
+            else player_cnt++;
+
+            if (player_cnt >= m_players.Count) player_cnt %= m_players.Count;
+            else if (player_cnt < 0) player_cnt = m_players.Count + player_cnt;
+        }
+
+        Card open_card = m_turn.m_open_card;
+        openCard_displayCard.DisplayOpenCard(m_turn);
+
+        Debug.Log($"========== TURN{turn_cnt} - {player_cnt + 1}P ==========");
+        Debug.Log($"Current open card : {m_turn.m_open_card.ShowCard()}");
+
+
+        Player now_player = m_players[player_cnt];
+
+        now_player.ShowHand();
+        now_player.ShowPlayableHand(open_card);
+        
+        // プレイヤーのプレイ
+        m_turn.Action(player_cnt);
+
+        openCard_displayCard.DisplayOpenCard(m_turn);
+
+        foreach (Player player in m_players)
+        {
+            if (player.CheckWin())
+            {
+                winner = player.m_name;
+
+                Debug.Log($"{winner} has won!");
+                Debug.Log("This game has ended!");
+            }
+        }
+
+        if (winner != null) yield break;
+        if (now_player.m_played_card == null) yield break;
+
+        if (now_player.m_played_card.m_value == "SKIP")
+        {
+            Debug.Log($"The next player of {now_player.m_name} will be skipped!");
+
+            if (turn_rev) player_cnt--;
+            else player_cnt++;
+        }
+        else if (now_player.m_played_card.m_value == "REV")
+        {
+            Debug.Log("Turn will be reversed!");
+
+            turn_rev = !turn_rev;
+        }
     }
 }
