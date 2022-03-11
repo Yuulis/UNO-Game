@@ -35,8 +35,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public List<Sprite> cardSprites;
 
     // Cardオブジェクト
-    DisplayCard openCard_displayCard;
-    DisplayCard deckTopCard_displayCard;
+    DisplayCard displayCard;
 
     // ログ出力の有無
     public bool logEnable;
@@ -52,8 +51,7 @@ public class GameManager : MonoBehaviour
         // 読み込みなど
         Debug.unityLogger.logEnabled = logEnable;
         cardSprites = Resources.LoadAll<Sprite>("UNO-Cards").ToList();
-        openCard_displayCard = GameObject.Find("OpenCard").GetComponent<DisplayCard>();
-        deckTopCard_displayCard = GameObject.Find("DeckTopCard").GetComponent<DisplayCard>();
+        displayCard = GameObject.Find("CardDisplayer").GetComponent<DisplayCard>();
 
         match_cnt = 0;
         timer = 0f;
@@ -134,8 +132,8 @@ public class GameManager : MonoBehaviour
         }
 
         Card open_card = m_turn.m_open_card;
-        openCard_displayCard.DisplayOpenCard(m_turn);
-        deckTopCard_displayCard.DisplayDeckTopCard();
+        displayCard.DisplayDeckTopCard();
+        displayCard.DisplayOpenCard(m_turn);
         
 
         Debug.Log($"========== TURN{turn_cnt} - {player_cnt + 1}P ==========");
@@ -150,7 +148,7 @@ public class GameManager : MonoBehaviour
         // プレイヤーのプレイ
         m_turn.Action(player_cnt);
 
-        openCard_displayCard.DisplayOpenCard(m_turn);
+        displayCard.DisplayOpenCard(m_turn);
 
         foreach (Player player in m_players)
         {
